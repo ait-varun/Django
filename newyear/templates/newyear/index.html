@@ -13,5 +13,11 @@
     {% else %}
     <h1 class="oldyear">Not Happy New Year 😢!</h1>
     {% endif %}
+
+    {% for task in tasks %}
+      <div class="task">
+        <h2>{{ task }}</h2>
+        </div>
+    {% endfor %}
   </body>
 </html>
