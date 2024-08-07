@@ -1,6 +1,8 @@
 import datetime
 from django import forms
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
 
 tasks = []
 
@@ -21,7 +23,7 @@ def add(request):
     if form.is_valid():
       task = form.cleaned_data["task"]
       tasks.append(task)
-      return render(request, "newyear/index.html",{"tasks": tasks})
+      return HttpResponseRedirect(reverse("index"))
     else:
       return render(request, "newyear/add.html",{"form": form})
   return render(request, "newyear/add.html",{"form": NewTaskForm()})
