@@ -4,17 +4,17 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-tasks = []
-
 class NewTaskForm(forms.Form):
   task = forms.CharField(label="New Task")
 
 # Create your views here.
 def index(request):
+    if "tasks" not in request.session:
+        request.session["tasks"] = []
     now = datetime.datetime.now()
     return render(request, "newyear/index.html",{
       "newyear": now.month == 1 and now.day == 1,
-      "tasks": tasks
+      "tasks": request.session["tasks"]
     })
 
 def add(request):
@@ -22,7 +22,7 @@ def add(request):
     form = NewTaskForm(request.POST)
     if form.is_valid():
       task = form.cleaned_data["task"]
-      tasks.append(task)
+      request.session["tasks"] += [task]
       return HttpResponseRedirect(reverse("index"))
     else:
       return render(request, "newyear/add.html",{"form": form})
