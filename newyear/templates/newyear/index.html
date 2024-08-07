@@ -1,23 +1,13 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IS THIS A NEW YEAR?</title>
-    <link rel="stylesheet" href="{% static 'newyear/styles.css' %}" />
-  </head>
-  <body>
-    {% if newyear %}
-    <h1 class="newyear">Happy New Year 😍🎉!</h1>
-    {% else %}
-    <h1 class="oldyear">Not Happy New Year 😢!</h1>
-    {% endif %}
-
-    {% for task in tasks %}
-      <div class="task">
-        <h2>{{ task }}</h2>
-        </div>
-    {% endfor %}
-  </body>
-</html>
+{% extends "newyear/layout.html" %}
+{% block body %}
+<h1>New Year's Tasks</h1>
+{% if newyear %}
+<p>Happy New Year!</p>
+{% endif %}
+<ul>
+  {% for task in tasks %}
+  <li>{{ task }}</li>
+  {% endfor %}
+</ul>
+<a href="{% url 'add' %}">Add a task</a>
+{% endblock %}
